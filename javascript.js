@@ -7,6 +7,11 @@ function Book(title, author, numberOfPages, isRead) {
   this.isRead = isRead;
 }
 
+//prototype for the read status button
+// Book.prototype.didYouRead = function() {
+//     return isRead;
+// }
+
 //const book1 = new Book('t1', 'a1', 'n1', 'i1');
 //const book2 = new Book('t2', 'a2', 'n2', 'i2');
 
@@ -17,12 +22,33 @@ function addBookToLibrary(book) {
 
 //addBookToLibrary();
 //add a function to loop through the array and display the book on page
+//also add remove button on in this function
 const bookDisplay = document.querySelector(".book");
 function displayBook() {
-    for (let book in myLibrary) {
+    for (let i = 0; i < myLibrary.length; i++) {
         let eachBook = document.createElement('div');
-        eachBook.textContent = `book title: ${myLibrary[book].title}; book author: ${myLibrary[book].author}; book page: ${myLibrary[book].numberOfPages}; read the book yet: ${myLibrary[book].isRead}`
+        //each book contains bookContent, remove button and read status button
+        eachBook.classList.add(`book${i}`);
+        let bookContent = document.createElement('div');
+        bookContent.textContent = `book title: ${myLibrary[i].title}; book author: ${myLibrary[i].author}; book page: ${myLibrary[i].numberOfPages}; read the book yet: ${myLibrary[i].isRead}`;
+        eachBook.appendChild(bookContent);
+        //add removebutton
+        let removeButton = document.createElement("button"); 
+        removeButton.textContent = "Remove";
+        removeButton.classList.add(`book${i}`);
+        eachBook.appendChild(removeButton);
+        //add read status button(instructions needint prototype funciton)
+        let readStatus = document.createElement("button");
+        readStatus.classList.add('readstatus');
+        //the prototype is didYouRead() not didYouRead!
+        if(myLibrary[i].isRead) {
+            readStatus.innerHTML = "Read? Yes";
+        } else {
+            readStatus.innerHTML = "Read? No";
+        }
+        eachBook.appendChild(readStatus);
         bookDisplay.appendChild(eachBook);
+
     }
 }
 //displayBook();
@@ -60,7 +86,7 @@ function closeForm() {
 const noSubmit = document.querySelector(".submit");
 noSubmit.addEventListener("click", (e) => {
     console.log("You clicked it");
-    //to prevent books from displaying repeatedly,clear bookDisplay content each time
+    //to prevent books from displaying repeatedly,clear bookDisplay content each time by replacing all children with empty div
     bookDisplay.replaceChildren();
     e.preventDefault();
     const inputTitle = document.getElementById("title");
@@ -77,5 +103,57 @@ noSubmit.addEventListener("click", (e) => {
     displayBook();
     //after this, we close the form
     closeForm();
+    //clear the previous submission text content
+    document.getElementById("bookform").reset();
+    
+});
+
+//add remove button funciton
+//the below code only works with one book, we need to remove the book for each one, so this button needs to be attached to the book
+//therefore we add this button when we loop over each book to display on the screen
+//the same goes for read status
+// function addRemoveButton() {
+//     const removeButton = document.createElement("button");
+//     removeButton.textContent = "Remove";
+//     bookDisplay.appendChild(removeButton);
+// }
+
+//once you click remove button, remove the book from the array and display all together
+//below code won't work because when elements are newly created, the eventlistener happened in the past. So it seems like nothing on the DOM has any event.
+//You need to attach the event to the parent so the event can be detected by event bubbling
+
+//This is called Event Delegation
+
+// const removeButtons = document.querySelectorAll('button');
+// removeButtons.forEach(removeButton => removeButton.addEventListener('click', (e) => {
+//     console.log(e.target.className);
+// }));
+
+document.querySelector('.book').addEventListener('click', (e) => {
+    //const target = e.target.closest("[class^='book']");
+    console.log(e.target);
+    //delete the remove button element and remove from book from array
+    if (e.target && e.target.className != "" && e.target.className.includes("book")){
+        const removedChild = document.querySelector(`.${e.target.className}`);
+        console.log(removedChild);
+        document.querySelector('.book').removeChild(removedChild);
+        let index = parseInt(e.target.className.slice(4), 10);
+        //splice() for removal: first index, where to remove, second index for how many elements
+        myLibrary.splice(index, 1); 
+        //at this point, we need to update the html with the right index
+        bookDisplay.replaceChildren();
+        displayBook();
+    }
+});
+
+//toggle the readstatus button
+document.querySelector('.book').addEventListener('click', (e) => {
+    if (e.target && e.target.className === "readstatus" ) {
+        if(e.target.innerHTML === "Read? Yes") {
+            e.target.innerHTML = "Read? No";
+        } else {
+            e.target.innerHTML = "Read? Yes";
+        }
+    }
 });
 
