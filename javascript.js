@@ -71,7 +71,10 @@ newBook.addEventListener("click", (e) => {
     openForm();
 });
 
-
+const closeFormButton = document.querySelector(".close");
+closeFormButton.addEventListener("click", (e) => {
+    closeForm();
+});
 
 function openForm() {
     document.querySelector(".formcontainer").style.display = "block";
