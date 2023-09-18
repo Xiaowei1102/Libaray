@@ -30,7 +30,9 @@ function displayBook() {
         //each book contains bookContent, remove button and read status button
         eachBook.classList.add(`book${i}`);
         let bookContent = document.createElement('div');
-        bookContent.textContent = `book title: ${myLibrary[i].title}; book author: ${myLibrary[i].author}; book page: ${myLibrary[i].numberOfPages}; read the book yet: ${myLibrary[i].isRead}`;
+        bookContent.textContent = `Title: ${myLibrary[i].title}
+        Author: ${myLibrary[i].author}
+        Pages: ${myLibrary[i].numberOfPages}`;
         eachBook.appendChild(bookContent);
         //add removebutton
         let removeButton = document.createElement("button"); 
@@ -77,7 +79,7 @@ closeFormButton.addEventListener("click", (e) => {
 });
 
 function openForm() {
-    document.querySelector(".formcontainer").style.display = "block";
+    document.querySelector(".formcontainer").style.display = "flex";
 }
 
 function closeForm() {

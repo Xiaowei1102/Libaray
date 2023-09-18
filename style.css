@@ -1,3 +1,63 @@
 .formcontainer {
     display: none;
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+body {
+    background-color: #eeeee4;
+    margin: 0;
+}
+h1 {
+    background-color: white;
+    margin-top: 0;
+    padding-left: 20px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+#addbook,
+.close,
+.submit, 
+button[class^='book'],
+.readstatus {
+    margin-left: 30px;
+    background-color: white;
+    height: 30px;
+    width: 100px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+#bookform {
+    min-width: 300px;
+    min-height: 200px;
+    background-color: white;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+    border-radius: 10px;
+    padding-left: 20px;
+}
+
+.book > div {
+    min-height: 80px;
+    display: flex;
+    background-color: #cce7e8;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
+}
+
+[class^='book'] > div {
+    white-space: pre-line;
+    flex: 1 1 auto;
 }
