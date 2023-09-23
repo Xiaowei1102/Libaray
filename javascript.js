@@ -1,10 +1,21 @@
 const myLibrary = [];
 
-function Book(title, author, numberOfPages, isRead) {
-  this.title = title;
-  this.author = author;
-  this.numberOfPages = numberOfPages;
-  this.isRead = isRead;
+//change the below function constructor to class
+// function Book(title, author, numberOfPages, isRead) {
+//   this.title = title;
+//   this.author = author;
+//   this.numberOfPages = numberOfPages;
+//   this.isRead = isRead;
+// }
+
+class Book {
+    constructor(title, author, numberOfPages, isRead) {
+        this.title = title;
+        this.author = author;
+        this.numberOfPages = numberOfPages;
+        this.isRead = isRead;
+    }
+
 }
 
 //prototype for the read status button
@@ -138,7 +149,7 @@ document.querySelector('.book').addEventListener('click', (e) => {
     //const target = e.target.closest("[class^='book']");
     console.log(e.target);
     //delete the remove button element and remove from book from array
-    if (e.target && e.target.className != "" && e.target.className.includes("book")){
+    if (e.target && e.target.tagName === "BUTTON" && e.target.className.includes("book")){
         const removedChild = document.querySelector(`.${e.target.className}`);
         console.log(removedChild);
         document.querySelector('.book').removeChild(removedChild);
