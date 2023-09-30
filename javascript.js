@@ -101,26 +101,34 @@ function closeForm() {
 
 const noSubmit = document.querySelector(".submit");
 noSubmit.addEventListener("click", (e) => {
-    console.log("You clicked it");
-    //to prevent books from displaying repeatedly,clear bookDisplay content each time by replacing all children with empty div
-    bookDisplay.replaceChildren();
-    e.preventDefault();
-    const inputTitle = document.getElementById("title");
-    const inputAuthor = document.getElementById("author");
-    const inputPages = document.getElementById("pagenumbers");
-    const isRead = document.getElementById("readstatus");
-    console.log(inputAuthor.value);
-    console.log(isRead.checked);
-    //create new book
-    const newBook = new Book(inputTitle.value, inputAuthor.value, inputPages.value, isRead.checked);
-    //add this book to myLibrary
-    addBookToLibrary(newBook);
-    //display the books
-    displayBook();
-    //after this, we close the form
-    closeForm();
-    //clear the previous submission text content
-    document.getElementById("bookform").reset();
+    //add validity check
+    //regardless of data validity, the input data will be collected and shown if you dont put this as a condition. Therefore, simply put "require" in the html input element wont do it.
+    const title = document.getElementById("title");
+    const author = document.getElementById("author");
+    const page = document.getElementById("pagenumbers");
+    const missingValue = title.validity.valueMissing || author.validity.valueMissing || page.validity.valueMissing;
+    if (!missingValue) {
+        console.log("You clicked it");
+        //to prevent books from displaying repeatedly,clear bookDisplay content each time by replacing all children with empty div
+        bookDisplay.replaceChildren();
+        e.preventDefault();
+        const inputTitle = document.getElementById("title");
+        const inputAuthor = document.getElementById("author");
+        const inputPages = document.getElementById("pagenumbers");
+        const isRead = document.getElementById("readstatus");
+        console.log(inputAuthor.value);
+        console.log(isRead.checked);
+        //create new book
+        const newBook = new Book(inputTitle.value, inputAuthor.value, inputPages.value, isRead.checked);
+        //add this book to myLibrary
+        addBookToLibrary(newBook);
+        //display the books
+        displayBook();
+        //after this, we close the form
+        closeForm();
+        //clear the previous submission text content
+        document.getElementById("bookform").reset();
+    }
     
 });
 
